@@ -32,6 +32,7 @@ unsigned int frequencyMs = 10;
 struct second_time_frame{
   unsigned short values_read[50];
   unsigned short second;
+  unsigned short currentIndex = 0;
 };
 
 second_time_frame measures[50];
@@ -95,6 +96,27 @@ unsigned int getMin(second_time_frame * frame){
   return 0;
 }
 
+void measure(second_time_frame * frame){
+  second_time_frame * current = &measures[currentIndex];
+
+  int val = analogRead(A0);
+  current->values_read[current->currentIndex] = (unsigned short) val;
+
+  current->currentIndex++;  
+}
+
+unsigned short getBPM(){
+
+}
+
+void startMeasuring(){
+  measure(nullptr);
+}
+
+void stopMeasuring(){
+
+}
+
 void loop(){
     if(nextMilis == 0){
         nextMilis = millis() + frequencyMs;
@@ -103,6 +125,8 @@ void loop(){
     if(millis() < nextMilis){
         return;
     }
+
+    startMeasuring();
 
     int val = analogRead(A0);
     if(val > 800){
