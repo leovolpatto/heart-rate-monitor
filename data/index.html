@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
 <html>
-
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -21,7 +20,7 @@
 </head>
 
 <body>
-    <h2>Batimentos Cardiacos</h2>
+    <h2>BPM</h2>
     <h4 id="bpm"></h4>
     <div id="chart-heartbeat" class="container"></div>
 </body>
@@ -60,22 +59,9 @@
                 
                 let time = new Date();
                 let timestapm = time.getTime();
-                cc.forEach((val) => {
-                    
-                    var x = timestapm,
-                        y = val;
-
-
-                        chartT.series[0].addPoint([x, y], true, false, true);
-                    //if (chartT.series[0].data.length > 40) {
-                        /*
-                    if (chartT.series[0].data.length > 40) {
-                        chartT.series[0].addPoint([x, y], true, true, true);
-                    } else {
-                        chartT.series[0].addPoint([x, y], true, false, true);
-                    }
-                    */
-
+                cc.forEach((val) => {                    
+                    var x = timestapm, y = val;
+                    chartT.series[0].addPoint([x, y], true, false, true);
                     timestapm = time.setMilliseconds(time.getMilliseconds() + (10000 / cc.length));                    
                 });
 

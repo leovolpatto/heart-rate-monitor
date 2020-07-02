@@ -23,9 +23,11 @@ String lastDataSet;
 
 AsyncWebServer server(80);
 
-int bufferSize = 50;
-int beats[50];
-int currentIndex = 0;
+unsigned int bufferSize = 50;
+unsigned int beats[50];
+unsigned int currentIndex = 0;
+unsigned long nextMilis = 0;
+unsigned int frequencyMs = 10;
 
 void initBeats(){
     for(int i = 0; i < bufferSize; i++){
@@ -33,24 +35,7 @@ void initBeats(){
     }
 }
 
-void setup(){
-  Serial.begin(115200);
-
-  initBeats();
-  
-  if(!SPIFFS.begin()){
-    Serial.println("An Error has occurred while mounting SPIFFS");
-    return;
-  }
-
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.println("Connecting to WiFi..");
-  }
-
-  Serial.println(WiFi.localIP());
-
+void setupWebServer(){
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/index.html");
   });
@@ -75,9 +60,33 @@ void setup(){
   
   server.begin();
 }
- 
-unsigned long nextMilis = 0;
-int frequencyMs = 10;
+
+void setup(){
+  Serial.begin(115200);
+
+  initBeats();
+  
+  if(!SPIFFS.begin()){
+    Serial.println("An Error has occurred while mounting SPIFFS");
+    return;
+  }
+
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.println("Connecting to WiFi..");
+  }
+
+  Serial.println(WiFi.localIP());
+}
+
+unsigned int getMax(){
+  return 0;
+}
+
+unsigned int getMin(){
+  return 0;
+}
 
 void loop(){
     if(nextMilis == 0){
