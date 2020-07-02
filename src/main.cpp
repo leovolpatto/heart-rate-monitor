@@ -29,6 +29,13 @@ unsigned int currentIndex = 0;
 unsigned long nextMilis = 0;
 unsigned int frequencyMs = 10;
 
+struct second_time_frame{
+  unsigned short values_read[50];
+  unsigned short second;
+};
+
+second_time_frame measures[50];
+
 void initBeats(){
     for(int i = 0; i < bufferSize; i++){
         beats[i] = 0;
@@ -80,11 +87,11 @@ void setup(){
   Serial.println(WiFi.localIP());
 }
 
-unsigned int getMax(){
+unsigned int getMax(second_time_frame * frame){
   return 0;
 }
 
-unsigned int getMin(){
+unsigned int getMin(second_time_frame * frame){
   return 0;
 }
 
